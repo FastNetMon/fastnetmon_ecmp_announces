@@ -19,8 +19,8 @@ sudo apt-get install -y libjson-perl libipc-run-perl git
 
 Finally, you need to download script from GitHub:
 ```
-git clone git@github.com:FastNetMon/selective_bgp_blackhole_traffic_diversion_api.git
-cd selective_bgp_blackhole_traffic_diversion_api
+git clone git@github.com:FastNetMon/fastnetmon_ecmp_announces.git
+cd fastnetmon_ecmp_announces
 sudo cp notify_json.pl /usr/local/bin/notify_json.pl
 ```
 
@@ -32,19 +32,22 @@ sudo fcli set main notify_script_path /usr/local/bin/notify_json.pl
 sudo fcli commit
 ```
 
-After initial setup, we suggest manual check for hosts from each group and test FastNetMon’s behaviour in each case.
+After initial setup, we suggest manual check to ensure that announces work just fine.
 
 To test host from group host_to_blackhole:
 ```
 sudo fcli set blackhole 11.22.33.44
 ```
 
-To test host from group host_to_scrubbing:
-```
-sudo fcli set blackhole 10.10.10.10
-```
-
 You can debug actions from our script using this command:
 ```
 sudo tail -f /tmp/selective_bgp_blackhole_traffic_diversion_api.log
 ```
+
+Then you can check that gobgp works as expected this way:
+```
+gobgp global rib 
+   Network              Next Hop             AS_PATH              Age        Attrs
+*> 1.2.3.0/24           1.2.3.1                                   00:00:05   [{Origin: ?}]
+*  1.2.3.0/24           1.2.3.2                                   00:00:03   [{Origin: ?}]
+``
