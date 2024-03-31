@@ -50,3 +50,13 @@ You can debug actions from our script using this command:
 ```
 sudo tail -f /tmp/fastnetmon_ecmp_announces.log
 ```
+
+You can manually check that script works as expected using this command:
+```
+echo '{"ip":"1.2.3.4"}' | ./notify_json.pl ban 11.22.33.44
+```
+
+And to unban:
+```
+echo '{"ip":"1.2.3.4"}' | ./notify_json.pl unban 11.22.33.44
+```

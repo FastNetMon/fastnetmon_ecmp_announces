@@ -44,32 +44,39 @@ print {$fl} "Received notification about $ip_address with action $action\n";
  
 print {$fl} Dumper($attack_details);
 
-my $host_group = $attack_details->{attack_details}->{'host_group'};
-
-my $command = '';
-
 if ($action eq 'ban') {
     # Make unique announce for each next hop
     for (my $i = 0; $i <= $#next_hops; $i++) { 
         # We need to use unique identifier for each announce
-        $command = "gobgp global rib add -a ipv4 $attack_details->{ip}/32 community $community_host_to_blackhole nexthop $next_hops[$i] identifier $i";
+        my $command = "gobgp global rib add -a ipv4 $attack_details->{ip}/32 community $community_host_to_blackhole nexthop $next_hops[$i] identifier $i";
+   
+        print {$fl} "Will execute command $command\n";
+        my $res = system($command);
+
+        if ($res != 0) {
+            print {$fl} "Command failed with code $res\n";
+        } else {
+            print {$fl} "Command executed correctly\n";
+        }
+
     }
 } elsif ($action eq 'unban') {
     # To withdraw them all need to provide identifier each time
     for (my $i = 0; $i <= $#next_hops; $i++) {
-        $command = "gobgp global rib del -a ipv4 $attack_details->{ip}/32 identifier $i";
+        my $command = "gobgp global rib del -a ipv4 $attack_details->{ip}/32 identifier $i";
+
+        print {$fl} "Will execute command $command\n";
+        my $res = system($command);
+
+        if ($res != 0) {
+            print {$fl} "Command failed with code $res\n";
+        } else {
+            print {$fl} "Command executed correctly\n";
+        }
     }
+
 } else {
     die "Unknown action $action";
-}
-
-print {$fl} "Will execute command $command for group $host_group\n";
-my $res = system($command);
-
-if ($res != 0) {
-    print {$fl} "Command failed with code $res\n";
-} else {
-    print {$fl} "Command executed correctly\n";
 }
 
 close $fl;
