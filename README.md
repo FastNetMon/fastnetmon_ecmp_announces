@@ -32,17 +32,11 @@ sudo fcli set main notify_script_path /usr/local/bin/notify_json.pl
 sudo fcli commit
 ```
 
-After initial setup, we suggest manual check to ensure that announces work just fine.
-
-To test host from group host_to_blackhole:
+After initial setup, we suggest manual check to ensure that announces work just fine:
 ```
 sudo fcli set blackhole 11.22.33.44
 ```
 
-You can debug actions from our script using this command:
-```
-sudo tail -f /tmp/selective_bgp_blackhole_traffic_diversion_api.log
-```
 
 Then you can check that gobgp works as expected this way:
 ```
@@ -51,3 +45,8 @@ gobgp global rib
 *> 1.2.3.0/24           1.2.3.1                                   00:00:05   [{Origin: ?}]
 *  1.2.3.0/24           1.2.3.2                                   00:00:03   [{Origin: ?}]
 ``
+
+You can debug actions from our script using this command:
+```
+sudo tail -f /tmp/fastnetmon_ecmp_announces.log
+```
