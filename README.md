@@ -1,5 +1,5 @@
 # Intro
-This tool offers an option to annonce multiple BGP routes with different next hop to implement ECMP load balancing
+This tool offers an option to annonce multiple BGP routes with different next hop to implement ECMP load balancing.
 
 To use this guide you need to have configured BGP connection. Please follow official [guide](https://fastnetmon.com/docs-fnm-advanced/fastnetmon-bgp-unicast-configuration/) for it.
 
@@ -8,6 +8,12 @@ After configuring BGP, please disable any standard actions for BGP. We will use 
 ```
 sudo fcli set main gobgp_announce_host false
 sudo fcli set main gobgp_announce_whole_subnet false
+sudo fcli commit
+```
+
+Then you need to enable add path capability (requires FastNetMon 2.0.364 or newer) for all your BGP peers:
+```
+sudo fcli set bgp connection_to_my_router ipv4_unicast_add_path true
 sudo fcli commit
 ```
 
