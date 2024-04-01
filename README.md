@@ -44,7 +44,7 @@ gobgp global rib
    Network              Next Hop             AS_PATH              Age        Attrs
 *> 1.2.3.0/24           1.2.3.1                                   00:00:05   [{Origin: ?}]
 *  1.2.3.0/24           1.2.3.2                                   00:00:03   [{Origin: ?}]
-``
+```
 
 You can debug actions from our script using this command:
 ```
