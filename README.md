@@ -67,3 +67,43 @@ And to unban:
 ```
 echo '{"ip":"1.2.3.4"}' | ./notify_json.pl unban 11.22.33.44
 ```
+
+For Juniper we can provide example configuration:
+```
+protocols bgp group my-group 
+accept-remote-nexthop;
+local-address 10.0.0.1;
+family inet {
+    unicast {
+        add-path {
+            receive;
+        }
+    }
+}
+export reject-all;
+peer-as 65000;
+local-as 65001;
+multipath;
+neighbor 10.0.0.2;
+```
+
+Example output from routes:
+```
+....
+
+100.0.0.1/32      *[BGP/170] 00:02:29, localpref 100, from 10.0.0.2
+                      AS path: 65000 ?, validation-state: unverified
+                       to 1.2.3.4 via irb.x
+                    >  to 1.2.3.4 via irb.x
+                       to 1.2.3.4 via irb.x
+                       to 1.2.3.4 via irb.x
+                    [BGP/170] 00:02:29, localpref 100, from 10.0.0.2
+                      AS path: 65000 ?, validation-state: unverified
+                    >  to 1.2.3.4 via irb.x
+                    [BGP/170] 00:02:29, localpref 100, from 10.0.0.2
+                      AS path: 65000 ?, validation-state: unverified
+                    >  to 1.2.3.4 via irb.x
+                    [BGP/170] 00:02:29, localpref 100, from 10.0.0.2
+                      AS path: 65000 ?, validation-state: unverified
+                    >  to 1.2.3.4 via irb.x
+```
