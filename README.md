@@ -6,8 +6,8 @@ To use this guide you need to have configured BGP connection. Please follow offi
 After configuring BGP, please disable any standard actions for BGP. We will use notify script instead because we need custom logic:
 
 ```
-sudo fcli set main gobgp_announce_host disable
-sudo fcli set main gobgp_announce_whole_subnet disable
+sudo fcli set main gobgp_announce_host false
+sudo fcli set main gobgp_announce_whole_subnet false
 sudo fcli commit
 ```
 
