@@ -22,6 +22,7 @@ Finally, you need to download script from GitHub:
 git clone git@github.com:FastNetMon/fastnetmon_ecmp_announces.git
 cd fastnetmon_ecmp_announces
 sudo cp notify_json.pl /usr/local/bin/notify_json.pl
+sudo chmod +x /usr/local/bin/notify_json.pl
 ```
 
 And configure it for your FastNetMon instance to call it when FastNetMon detects an attack.
