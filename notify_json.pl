@@ -7,6 +7,10 @@ use JSON;
 use IPC::Run qw(run); 
 use Data::Dumper;
 
+#
+# This tool is based on approach explained here: https://github.com/osrg/gobgp/issues/1615
+#
+
 my $community_host_to_blackhole = '65000:777';
 
 # You can provide multiple next hops here
